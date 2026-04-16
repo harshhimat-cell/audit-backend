@@ -1,7 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
-from routers import auth, waitlist, vault, rewards, admin
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+
+try:
+    from routers import auth, waitlist, vault, rewards, admin
+except ImportError:
+    import auth as auth
+    import waitlist as waitlist
+    import vault as vault
+    import rewards as rewards
+    import admin as admin
 
 Base.metadata.create_all(bind=engine)
 
@@ -13,7 +23,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Restrict to your domain in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
