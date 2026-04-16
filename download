@@ -1,0 +1,15 @@
+modules = ["python-3.11", "postgresql-15"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+deploymentTarget = "cloudrun"
+run = ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+[env]
+SECRET_KEY = "aubit-change-this-in-production-2025"
+
+[[ports]]
+localPort = 8000
+externalPort = 80
